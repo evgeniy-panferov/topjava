@@ -46,7 +46,6 @@ public class UserMealsUtil {
             if (TimeUtil.isBetweenHalfOpen(dayTime, startTime, endTime)) {
                 resultMeals.add(new UserMealWithExcess(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), isExcess));
             }
-
         }
         return resultMeals;
     }
@@ -65,7 +64,8 @@ public class UserMealsUtil {
                 .map(userMeal -> {
                     boolean isExcess = dayCaloriesMap.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay;
                     return new UserMealWithExcess(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), isExcess);
-                }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
         return resultMeals;
     }
 }
