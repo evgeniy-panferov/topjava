@@ -1,0 +1,28 @@
+
+table {
+    border: 2px solid #0c0c0c;
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+tr {
+    background: goldenrod;
+}
+
+#tr-true {
+    background: antiquewhite;
+    color: brown;
+}
+
+#tr-false {
+    background: antiquewhite;
+    color: green;
+}
+
+th {
+    font-size: 24px;
+    width: 33%;
+    border: 1px solid #0c0c0c;
+}
+

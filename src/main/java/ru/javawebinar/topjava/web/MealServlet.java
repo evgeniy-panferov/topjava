@@ -21,8 +21,8 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to meals");
         req.setCharacterEncoding("UTF-8");
-        List<MealTo> mealTolist = MealsUtil.filteredByStreams(MealsUtil.create(), LocalTime.of(0, 0),
-                LocalTime.of(23, 0), 2000);
+        List<MealTo> mealTolist = MealsUtil.filteredByStreams(MealsUtil.createMealList(), LocalTime.MIN,
+                LocalTime.MAX, 2000);
         req.setAttribute("mealTo", mealTolist);
         req.getRequestDispatcher("/meals.jsp").forward(req, resp);
     }

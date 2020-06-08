@@ -12,47 +12,16 @@
     <title>Meals</title>
 </head>
 <body>
-<style type="text/css">
-    table {
-        border: 2px solid #0c0c0c;
-        width: 100%;
-        border-spacing: 0px;
-        border-collapse: collapse;
-    }
-
-    tr {
-        background: goldenrod;
-    }
-
-    #tr-true {
-        background: antiquewhite;
-        color: brown;
-    }
-
-    #tr-false {
-        background: antiquewhite;
-        color: green;
-    }
-
-    th {
-        font-size: 24px;
-        width: 33%;
-        border:1px solid #0c0c0c;
-    }
+<style>
+    <%@include file="/WEB-INF/css/style.css"%>
 </style>
 
 <table>
-
     <th>Дата</th>
     <th>Прием пищи</th>
     <th>Калории</th>
     <c:forEach items="${mealTo}" var="mealTo">
-    <c:if test="${mealTo.excess eq true}">
-    <tr id="tr-true">
-        </c:if>
-        <c:if test="${mealTo.excess eq false}">
-    <tr id="tr-false">
-        </c:if>
+    <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
             <javatime:format value="${mealTo.dateTime}" pattern="yyyy-MM-dd HH:mm" var="parsedDate"/>
         <th>${parsedDate} </th>
         <th> ${mealTo.description}</th>
