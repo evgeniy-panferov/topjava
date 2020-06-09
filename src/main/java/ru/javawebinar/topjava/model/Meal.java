@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Meal {
     private  LocalDateTime dateTime;
@@ -11,9 +12,9 @@ public class Meal {
 
     private  int calories;
 
-    private final int id;
+    private final AtomicInteger id;
 
-    public Meal(LocalDateTime dateTime, String description, int calories, int id) {
+    public Meal(LocalDateTime dateTime, String description, int calories, AtomicInteger id) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -40,7 +41,7 @@ public class Meal {
         return dateTime.toLocalTime();
     }
 
-    public Integer getId() {
+    public AtomicInteger getId() {
         return id;
     }
 

@@ -1,14 +1,29 @@
 
-table {
+table.table-output {
     border: 2px solid #0c0c0c;
-    width: 100%;
+    width: 70%;
     border-spacing: 0px;
     border-collapse: collapse;
-}
+    margin: auto;
 
+}
 tr {
     background: goldenrod;
 }
+th {
+    font-size: 24px;
+    width: 33%;
+    border: 1px solid #0c0c0c;
+}
+
+
+input.input-inner{
+    font-size: 24px;
+    width: 30%;
+    border: 1px solid #0c0c0c;
+    margin-left: 35%;
+}
+
 
 #tr-true {
     background: antiquewhite;
@@ -20,9 +35,4 @@ tr {
     color: green;
 }
 
-th {
-    font-size: 24px;
-    width: 33%;
-    border: 1px solid #0c0c0c;
-}
 

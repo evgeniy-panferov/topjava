@@ -16,19 +16,28 @@
     <%@include file="/WEB-INF/css/style.css"%>
 </style>
 
-<table>
+<table class="table-output">
     <th>Дата</th>
     <th>Прием пищи</th>
     <th>Калории</th>
     <c:forEach items="${mealTo}" var="mealTo">
-    <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
+        <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
             <javatime:format value="${mealTo.dateTime}" pattern="yyyy-MM-dd HH:mm" var="parsedDate"/>
-        <th>${parsedDate} </th>
-        <th> ${mealTo.description}</th>
-        <th> ${mealTo.calories}</th>
-    <tr>
-        </c:forEach>
+            <th>${parsedDate} </th>
+            <th> ${mealTo.description}</th>
+            <th> ${mealTo.calories}</th>
+        </tr>
+    </c:forEach>
 </table>
-
+<br>
+<form method="post" action="mealsCrud">
+    <input class="input-inner" type="text" name="Date" placeholder="Введите дату"/>
+    <br>
+    <input class="input-inner" type="text" name="Eating" placeholder="Введите прием пищи"/>
+    <br>
+    <input class="input-inner" type="text" name="Calories" placeholder="Сколько калорий съели"/>
+    <br>
+    <input class="input-inner" type="submit" name="Отправить">
+</form>
 </body>
 </html>
