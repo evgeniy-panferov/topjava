@@ -27,13 +27,32 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>MealsController</servlet-name>
-        <servlet-class>ru.javawebinar.topjava.web.MealsController</servlet-class>
+        <servlet-name>MealsAdd</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.MealsAdd</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>MealsController</servlet-name>
-        <url-pattern>/mealsCrud</url-pattern>
+        <servlet-name>MealsAdd</servlet-name>
+        <url-pattern>/mealsAdd</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MealsRemove</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.MealsRemove</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MealsRemove</servlet-name>
+        <url-pattern>/mealsRemove</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MealsUpdate</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.MealsUpdate</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MealsUpdate</servlet-name>
+        <url-pattern>/mealsUpdate</url-pattern>
+    </servlet-mapping>
+
 
 
 

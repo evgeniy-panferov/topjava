@@ -1,4 +1,14 @@
 
+tr {
+    background: goldenrod;
+}
+th {
+    font-size: 24px;
+    width: 25%;
+    border: 1px solid #0c0c0c;
+}
+
+
 table.table-output {
     border: 2px solid #0c0c0c;
     width: 70%;
@@ -7,23 +17,20 @@ table.table-output {
     margin: auto;
 
 }
-tr {
-    background: goldenrod;
-}
-th {
-    font-size: 24px;
-    width: 33%;
-    border: 1px solid #0c0c0c;
-}
-
 
 input.input-inner{
     font-size: 24px;
-    width: 30%;
+    width: 90%;
     border: 1px solid #0c0c0c;
-    margin-left: 35%;
 }
 
+form.back{
+    margin: auto;
+}
+button.back{
+    width: 35%;
+    font-size:1.4vw;
+}
 
 #tr-true {
     background: antiquewhite;

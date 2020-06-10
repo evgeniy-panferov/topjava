@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.util.MealsDate;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -9,38 +11,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class MealsController extends HttpServlet {
-    private static final Logger log = getLogger(MealServlet.class);
+public class MealsAdd extends HttpServlet {
+    private static final Logger log = getLogger(MealsAdd.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.debug("redirect to mealsCrud GET");
+        log.debug("redirect to mealsAdd GET");
         req.setCharacterEncoding("UTF-8");
-        List<MealTo> mealTolist = MealsUtil.filteredByStreams(MealsUtil.createMealList(), LocalTime.MIN,
-                LocalTime.MAX, 2000);
-        req.setAttribute("mealTo", mealTolist);
-        req.getRequestDispatcher("/meals.jsp").forward(req, resp);
-
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.debug("redirect to mealsCrud Post");
+        log.debug("redirect to mealsAdd Post");
         req.setCharacterEncoding("UTF-8");
         String date = req.getParameter("Date");
-        String eating = req.getParameter("Eating");
+        String description = req.getParameter("Description");
         String calories = req.getParameter("Calories");
-        req.setAttribute("Date", date);
-        req.setAttribute("Eating", eating);
-        req.setAttribute("Calories", calories);
 
-        req.getRequestDispatcher("/mealsCrud.jsp").forward(req, resp);
+        req.setAttribute("Date",date);
+        req.setAttribute("Description",description);
+        req.setAttribute("Calories",calories);
+
+
+        LocalDateTime localDateTime = LocalDateTime.parse(date);
+        int intCalories = Integer.parseInt(calories);
+
+        MealsDate.addInMap(localDateTime,description,intCalories);
+        req.getRequestDispatcher("/mealsInfo.jsp").forward(req, resp);
 
     }
 }

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Meals</title>
+    <title>Title</title>
 </head>
 <body>
 <style>
@@ -17,37 +17,12 @@
 </style>
 
 <table class="table-output">
-    <th>Дата</th>
-    <th>Прием пищи</th>
-    <th>Калории</th>
-    <th>Действие</th>
-    <c:forEach items="${mealTo}" var="mealTo">
-        <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
-            <javatime:format value="${mealTo.dateTime}" pattern="yyyy-MM-dd HH:mm" var="parsedDate"/>
-            <th>${parsedDate}</th>
-            <th> ${mealTo.description}</th>
-            <th> ${mealTo.calories}</th>
-            <th>
-                <form class="back" method="post" action="mealsUpdate">
-                    <button type="hidden" name="Update" value="${mealTo.id}">Обновить</button>
-                </form>
-                <br>
-                <form class="back" method="post" action="mealsRemove">
-                    <button type="submit" name="Remove" value="${mealTo.id}">Удалить</button>
-                </form>
-            </th>
-        </tr>
-    </c:forEach>
-
-</table>
-<br>
-<table class="table-output">
     <tr>
-        <th>Добавить пользователя</th>
+        <th>Обновить пользователя</th>
     </tr>
     <tr>
         <th>
-            <form class="back" method="post" action="mealsAdd">
+            <form class="back" method="post" action="mealsUpdate">
                 <input class="input-inner" type="datetime-local" name="Date" placeholder="Введите дату"/>
                 <br>
                 <input class="input-inner" type="text" name="Description" placeholder="Введите прием пищи"/>

@@ -12,7 +12,7 @@ public class Meal {
 
     private  int calories;
 
-    private final AtomicInteger id;
+    private AtomicInteger id;
 
     public Meal(LocalDateTime dateTime, String description, int calories, AtomicInteger id) {
         this.dateTime = dateTime;
@@ -41,8 +41,8 @@ public class Meal {
         return dateTime.toLocalTime();
     }
 
-    public AtomicInteger getId() {
-        return id;
+    public Integer getId() {
+        return id.intValue();
     }
 
     public void setDateTime(LocalDateTime dateTime) {

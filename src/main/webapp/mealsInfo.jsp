@@ -21,8 +21,15 @@
     </tr>
     <tr id="tr-true">
         <th>${Date}</th>
-        <th>${Eating}</th>
+        <th>${Description}</th>
         <th>${Calories}</th>
+    </tr>
+    <tr>
+        <th colspan="3">
+    <form class="back" action="meals">
+        <button class="back" type="submit">Назад</button>
+    </form>
+        </th>
     </tr>
 </table>
 </body>

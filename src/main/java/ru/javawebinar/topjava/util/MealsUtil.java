@@ -30,7 +30,7 @@ public class MealsUtil {
     }
 
     private static MealTo createTo(Meal meal, boolean excess) {
-        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess, meal.getId());
+        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess, new AtomicInteger(meal.getId()));
     }
 
     public static List<Meal> createMealList() {
