@@ -25,7 +25,6 @@ public class MealsDate {
         Meal meal = new Meal(dateTime, description, calories, count);
         mealMap.put(count.intValue(), meal);
         count.addAndGet(1);
-
     }
 
     public static void removeFromMap(int id) {

@@ -14,20 +14,21 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealsRemove extends HttpServlet {
     private static final Logger log = getLogger(MealsRemove.class);
-
+    MealsDate mealsDate = new MealsDate();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsRemove GET");
         req.setCharacterEncoding("UTF-8");
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsRemove Post");
         req.setCharacterEncoding("UTF-8");
-        String parameter= req.getParameter("Remove");
-            int id = Integer.parseInt(parameter);
-            MealsDate.removeFromMap(id);
-            resp.sendRedirect("meals");
+        String parameter = req.getParameter("Id");
+        int id = Integer.parseInt(parameter);
+        MealsDate.removeFromMap(id - 1);
+        resp.sendRedirect("meals");
     }
 }

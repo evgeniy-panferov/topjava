@@ -16,25 +16,26 @@ public class MealsUpdate extends HttpServlet {
     MealsDate mealsDate=new MealsDate();
     private static final Logger log = getLogger(MealsRemove.class);
 
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsUpdate GET");
         req.setCharacterEncoding("UTF-8");
-        //  req.getRequestDispatcher("/meals.jsp").forward(req, resp);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsUpdate Post");
         req.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("/mealsUpdate.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/mealsUpdate.jsp").forward(req, resp);
 
-        String parameter = req.getParameter("Update");
-        int id = Integer.parseInt(parameter);
+
         LocalDateTime localDateTime = LocalDateTime.parse(req.getParameter("Date"));
         String description = req.getParameter("Description");
         int intCalories = Integer.parseInt(req.getParameter("Calories"));
-
-        MealsDate.updateMap(id, localDateTime, description, intCalories);
-
+        String parameter = req.getParameter("Id");
+        int id = Integer.parseInt(parameter);
+        MealsDate.updateMap(id-1, localDateTime, description, intCalories);
+        resp.sendRedirect("meals");
     }
 }

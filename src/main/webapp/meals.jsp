@@ -20,20 +20,30 @@
     <th>Дата</th>
     <th>Прием пищи</th>
     <th>Калории</th>
-    <th>Действие</th>
+    <th>id</th>
+    <th>Обновить</th>
+    <th>Удалить</th>
     <c:forEach items="${mealTo}" var="mealTo">
         <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
             <javatime:format value="${mealTo.dateTime}" pattern="yyyy-MM-dd HH:mm" var="parsedDate"/>
             <th>${parsedDate}</th>
             <th> ${mealTo.description}</th>
             <th> ${mealTo.calories}</th>
+            <th> ${mealTo.id}</th>
             <th>
                 <form class="back" method="post" action="mealsUpdate">
-                    <button type="hidden" name="Update" value="${mealTo.id}">Обновить</button>
+                    <input class="input-inner" type="datetime-local" name="Date" placeholder="Введите дату"/>
+                    <br>
+                    <input class="input-inner" type="text" name="Description" placeholder="Введите прием пищи"/>
+                    <br>
+                    <input class="input-inner" type="text" name="Calories" placeholder="Сколько калорий съели"/>
+
+                    <button type="submit" name="Id" value="${mealTo.id}">Обновить</button>
                 </form>
-                <br>
+            </th>
+            <th>
                 <form class="back" method="post" action="mealsRemove">
-                    <button type="submit" name="Remove" value="${mealTo.id}">Удалить</button>
+                    <button type="submit" name="Id" value="${mealTo.id}">Удалить</button>
                 </form>
             </th>
         </tr>
