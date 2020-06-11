@@ -13,18 +13,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MealsDate {
     private static Map<Integer, Meal> mealMap = new ConcurrentHashMap<>();
     private static AtomicInteger count = new AtomicInteger(0);
-    private List<Meal> mealList = Collections.synchronizedList(new ArrayList<>());
 
-    public List<Meal> getListMeal() {
-        mealMap.forEach((k, v) -> mealList.add(v));
-        return mealList;
+    public static List<Meal> getListMeal() {
+
+        return Collections.synchronizedList(new ArrayList<>(mealMap.values()));
     }
 
 
     public static void addInMap(LocalDateTime dateTime, String description, int calories) {
-        Meal meal = new Meal(dateTime, description, calories, count);
+        Meal meal = new Meal(dateTime, description, calories, count.get());
         mealMap.put(count.intValue(), meal);
-        count.addAndGet(1);
+        count.incrementAndGet();
     }
 
     public static void removeFromMap(int id) {

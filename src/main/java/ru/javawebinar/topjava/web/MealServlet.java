@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsDate;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -23,10 +22,15 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to meals");
         req.setCharacterEncoding("UTF-8");
-        MealsDate mealsDate = new MealsDate();
-        List<MealTo> mealTolist = MealsUtil.filteredByStreams(mealsDate.getListMeal(), LocalTime.MIN,
+
+        List<MealTo> mealTolist = MealsUtil.filteredByStreams(MealsDate.getListMeal(), LocalTime.MIN,
                 LocalTime.MAX, 2000);
         req.setAttribute("mealTo", mealTolist);
         req.getRequestDispatcher("/meals.jsp").forward(req, resp);
+    }
+
+    @Override
+    public void init() throws ServletException {
+        MealsUtil.createMealList();
     }
 }
