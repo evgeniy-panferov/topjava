@@ -4,6 +4,8 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.MealsDate;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 public class MealDoCrud implements MealCrud {
 
@@ -14,8 +16,8 @@ public class MealDoCrud implements MealCrud {
     }
 
     @Override
-    public Meal read(int id) {
-        return MealsDate.readMealFromMap(id);
+    public Meal getMeal(int id) {
+        return MealsDate.getMealFromMap(id);
     }
 
     @Override
@@ -24,11 +26,17 @@ public class MealDoCrud implements MealCrud {
         meal.setDateTime(dateTime);
         meal.setCalories(calories);
         meal.setDescription(description);
-        MealsDate.updateMap(meal,id);
+        MealsDate.updateMap(meal, id);
     }
 
     @Override
     public void remove(int id) {
         MealsDate.removeFromMap(id);
+    }
+
+    @Override
+    public List<Meal> getListMeal() {
+        return Collections.synchronizedList(MealsDate.getListMeal());
+
     }
 }

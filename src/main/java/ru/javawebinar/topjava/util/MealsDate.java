@@ -43,7 +43,7 @@ public class MealsDate {
         }
     }
 
-    public static Meal readMealFromMap(int id) {
+    public static Meal getMealFromMap(int id) {
         Meal meal=null;
         synchronized (MealsDate.class) {
             if (mealMap.containsKey(id)) {

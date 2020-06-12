@@ -24,7 +24,7 @@
     <th>Обновить</th>
     <th>Удалить</th>
     <c:forEach items="${mealTo}" var="mealTo">
-        <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>
+       <tr id= ${mealTo.excess ? "tr-true" : "tr-false"}>--%>
             <javatime:format value="${mealTo.dateTime}" pattern="yyyy-MM-dd HH:mm" var="parsedDate"/>
             <th>${parsedDate}</th>
             <th> ${mealTo.description}</th>
@@ -34,13 +34,11 @@
             <th><a href="meals?action=update&Id=<c:out value="${mealTo.id}"/>">Update</a></th>
             <th><a href="meals?action=remove&Id=<c:out value="${mealTo.id}"/>">Delete</a></th>
         </tr>
-
     </c:forEach>
 
 </table>
 <br>
 <p><a href="meals?action=add">add</a></p>
-
 
 </body>
 </html>
