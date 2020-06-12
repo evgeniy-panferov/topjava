@@ -14,9 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealsUpdate extends HttpServlet {
     private static final Logger log = getLogger(MealsRemove.class);
-
-    MealDoCrud mealDoCrud = new MealDoCrud();
-
+    MealsDate mealsDate = new MealsDate();
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsUpdate GET");
         req.setCharacterEncoding("UTF-8");
@@ -34,7 +32,7 @@ public class MealsUpdate extends HttpServlet {
         String parameter = req.getParameter("Id");
         int id = Integer.parseInt(parameter);
 
-        mealDoCrud.update(localDateTime, description, intCalories,id);
+        mealsDate.updateMap(id, localDateTime, description, intCalories);
         resp.sendRedirect("meals");
     }
 }

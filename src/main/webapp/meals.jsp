@@ -30,17 +30,44 @@
             <th> ${mealTo.description}</th>
             <th> ${mealTo.calories}</th>
             <th> ${mealTo.id}</th>
+            <th>
+                <form class="back" method="post" action="mealsUpdate">
+                    <input class="input-inner" type="datetime-local" name="Date" placeholder="Введите дату"/>
+                    <br>
+                    <input class="input-inner" type="text" name="Description" placeholder="Введите прием пищи"/>
+                    <br>
+                    <input class="input-inner" type="text" name="Calories" placeholder="Сколько калорий съели"/>
 
-            <th><a href="meals?action=update&Id=<c:out value="${mealTo.id}"/>">Update</a></th>
-            <th><a href="meals?action=remove&Id=<c:out value="${mealTo.id}"/>">Delete</a></th>
+                    <button type="submit" name="Id" value="${mealTo.id}">Обновить</button>
+                </form>
+            </th>
+            <th>
+                <form class="back" method="post" action="mealsRemove">
+                    <button type="submit" name="Id" value="${mealTo.id}">Удалить</button>
+                </form>
+            </th>
         </tr>
-
     </c:forEach>
 
 </table>
 <br>
-<p><a href="meals?action=add">add</a></p>
-
-
+<table class="table-output">
+    <tr>
+        <th>Добавить пользователя</th>
+    </tr>
+    <tr>
+        <th>
+            <form class="back" method="post" action="mealsAdd">
+                <input class="input-inner" type="datetime-local" name="Date" placeholder="Введите дату"/>
+                <br>
+                <input class="input-inner" type="text" name="Description" placeholder="Введите прием пищи"/>
+                <br>
+                <input class="input-inner" type="text" name="Calories" placeholder="Сколько калорий съели"/>
+                <br>
+                <input class="input-inner" type="submit" name="Отправить">
+            </form>
+        </th>
+    </tr>
+</table>
 </body>
 </html>

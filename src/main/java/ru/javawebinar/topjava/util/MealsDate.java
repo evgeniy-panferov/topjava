@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,24 +11,23 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MealsDate {
+public class MealsDate implements MealsDateInterface{
     private static Map<Integer, Meal> mealMap = new ConcurrentHashMap<>();
-
     private static AtomicInteger count = new AtomicInteger(0);
 
-    public static List<Meal> getListMeal() {
+    public List<Meal> getListMeal() {
         return Collections.synchronizedList(new ArrayList<>(mealMap.values()));
     }
 
 
-    public static void addInMap(Meal meal) {
-        meal.setId(count.intValue());
+    public void addInMap(LocalDateTime dateTime, String description, int calories) {
+        Meal meal = new Meal(dateTime, description, calories, count.get());
         mealMap.put(count.intValue(), meal);
         count.incrementAndGet();
     }
 
-    public static void removeFromMap(int id) {
-        synchronized (MealsDate.class) {
+    public void removeFromMap(int id) {
+        synchronized (this) {
             if (mealMap.containsKey(id)) {
                 mealMap.remove(id);
                 count.decrementAndGet();
@@ -34,24 +35,29 @@ public class MealsDate {
         }
     }
 
-    public static void updateMap(Meal meal, int id) {
-        synchronized (MealsDate.class) {
+    public void updateMap(int id, LocalDateTime dateTime, String description, int calories) {
+        synchronized (this) {
             if (mealMap.containsKey(id)) {
-                meal.setId(id);
+                Meal meal = mealMap.get(id);
+                meal.setDateTime(dateTime);
+                meal.setCalories(calories);
+                meal.setDescription(description);
                 mealMap.put(id, meal);
             }
         }
     }
 
-    public static Meal getMealFromMap(int id) {
-        Meal meal=null;
-        synchronized (MealsDate.class) {
-            if (mealMap.containsKey(id)) {
-                 meal = mealMap.get(id);
-            }
-        }
-        return meal;
+    public void createTestList(){
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500);
+        addInMap(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
+
     }
+
 
 }
 

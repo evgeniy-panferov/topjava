@@ -14,8 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealsRemove extends HttpServlet {
     private static final Logger log = getLogger(MealsRemove.class);
-    private MealDoCrud mealDoCrud = new MealDoCrud();
-
+    MealsDate mealsDate = new MealsDate();
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.debug("redirect to mealsRemove GET");
         req.setCharacterEncoding("UTF-8");
@@ -28,7 +27,7 @@ public class MealsRemove extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String parameter = req.getParameter("Id");
         int id = Integer.parseInt(parameter);
-        mealDoCrud.remove(id);
+        mealsDate.removeFromMap(id);
         resp.sendRedirect("meals");
     }
 }
