@@ -25,7 +25,7 @@ public class MealServlet extends HttpServlet {
 
     private MealRepository repository;
     private ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-
+    MealRestController mealRestController = appCtx.getBean(MealRestController.class);
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -35,28 +35,30 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MealRestController mealRestController = appCtx.getBean(MealRestController.class);
         request.setCharacterEncoding("UTF-8");
-        String id = request.getParameter("id");
-        Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
-                LocalDateTime.parse(request.getParameter("dateTime")),
-                request.getParameter("description"),
-                Integer.parseInt(request.getParameter("calories")));
-
-        log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        if (meal.isNew()) {
-            mealRestController.create(meal);
-        } else {
-            mealRestController.update(meal);
+        String action = request.getParameter("action");
+        if (action.equals("add")) {
+            String id = request.getParameter("id");
+            Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.parseInt(request.getParameter("calories")));
+            log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
+            if (meal.isNew()) {
+                mealRestController.create(meal);
+            } else {
+                mealRestController.update(meal);
+            }
+        } else if (action.equals("users")) {
+            int userId = Integer.parseInt(request.getParameter("id"));
+            SecurityUtil.setAuthUserId(userId);
         }
         response.sendRedirect("meals");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MealRestController mealRestController = appCtx.getBean(MealRestController.class);
         String action = request.getParameter("action");
-
         switch (action == null ? "all" : action) {
             case "delete":
                 int id = getId(request);
