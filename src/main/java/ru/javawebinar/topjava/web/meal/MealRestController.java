@@ -44,10 +44,6 @@ public class MealRestController {
         return service.getAll(userId);
     }
 
-    public Collection<MealTo> getAllTo() {
-        log.info("getAllTo");
-        return MealsUtil.getTos(service.getAll(userId),2000);
-    }
 
     public void update(Meal meal) {
         log.info("update {}",meal);
