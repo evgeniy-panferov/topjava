@@ -9,6 +9,16 @@
 <ul>
     <li><a href="users">Users</a></li>
     <li><a href="meals">Meals</a></li>
+
+    <form action="meals" method="post">
+        <input type="hidden" name="action" value="users">
+        <p><select name="id">
+            <option disabled>Выберите пользователя</option>
+            <option value="1">User 1</option>
+            <option value="2">User 2</option>
+        </select></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
 </ul>
 </body>
 </html>
