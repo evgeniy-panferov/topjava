@@ -3,9 +3,10 @@ package ru.javawebinar.topjava.web.meal;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.util.Collection;
@@ -41,6 +42,11 @@ public class MealRestController {
     public Collection<Meal> getAll() {
         log.info("getAll");
         return service.getAll(userId);
+    }
+
+    public Collection<MealTo> getAllTo() {
+        log.info("getAllTo");
+        return MealsUtil.getTos(service.getAll(userId),2000);
     }
 
     public void update(Meal meal) {
