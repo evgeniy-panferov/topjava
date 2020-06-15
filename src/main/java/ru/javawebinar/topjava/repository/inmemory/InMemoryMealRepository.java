@@ -3,6 +3,8 @@ package ru.javawebinar.topjava.repository.inmemory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,9 +19,9 @@ public class InMemoryMealRepository implements MealRepository {
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-//    {
-//        MealsUtil.MEALS.forEach(meal -> this.save(meal, SecurityUtil.authUserId()));
-//    }
+    {
+        MealsUtil.MEALS.forEach(meal -> this.save(meal, SecurityUtil.authUserId()));
+    }
 
     @Override
     public Meal save(Meal meal, int userId) {
@@ -47,7 +49,7 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Meal get(int id, int userId) {
         List<Meal> collect = repository.values().stream()
-                .filter(meal -> meal.getUserId() == userId)
+                .filter(meal -> (meal.getUserId() == userId && meal.getId() == id))
                 .limit(1)
                 .collect(Collectors.toList());
         return collect.isEmpty() ? null : repository.get(collect.get(0).getId());

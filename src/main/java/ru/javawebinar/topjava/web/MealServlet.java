@@ -51,6 +51,7 @@ public class MealServlet extends HttpServlet {
             }
         } else if (action.equals("users")) {
             int userId = Integer.parseInt(request.getParameter("id"));
+            SecurityUtil.setAuthUserId(userId);
         }
         response.sendRedirect("meals");
     }
