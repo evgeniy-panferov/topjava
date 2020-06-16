@@ -17,7 +17,6 @@ public class InMemoryUserRepository implements UserRepository {
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
@@ -46,16 +45,13 @@ public class InMemoryUserRepository implements UserRepository {
         log.info("getAll");
         List<User> users = new ArrayList<>(repository.values());
         Collections.sort(users, Comparator.comparing(AbstractNamedEntity::getName));
-        return Collections.synchronizedList(users);
+        return users;
     }
 
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-
         return repository.values().stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new NullPointerException("I can't find that -" + email));
+                .filter(user -> user.getEmail().equals(email)).findAny().orElse(null);
     }
 }
