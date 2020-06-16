@@ -9,45 +9,46 @@ import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
-import java.util.Collection;
+import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 
 @Controller
 public class MealRestController {
-  private static final Logger log = getLogger(MealRestController.class);
+    private static final Logger log = getLogger(MealRestController.class);
 
-    @Autowired
     private MealService service;
 
-    private int userId = SecurityUtil.authUserId();
+    @Autowired
+    public MealRestController(MealService service) {
+        this.service = service;
+    }
 
     public Meal create(Meal meal) {
-        log.info("create {}",meal);
-        return service.create(meal, userId);
+        log.info("create {}", meal);
+        return service.create(meal, SecurityUtil.authUserId());
     }
 
     public void delete(int id) {
-        log.info("delete {}",id);
-        service.delete(id, userId);
+        log.info("delete {}", id);
+        service.delete(id, SecurityUtil.authUserId());
     }
 
     public Meal get(int id) {
-        Meal meal = service.get(id, userId);
-        log.info("get {}",meal);
+        Meal meal = service.get(id, SecurityUtil.authUserId());
+        log.info("get {}", meal);
         return meal;
     }
 
-    public Collection<Meal> getAll() {
+    public List<MealTo> getAll() {
         log.info("getAll");
-        return service.getAll(userId);
+        return MealsUtil.getTos(service.getAll(SecurityUtil.authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-
     public void update(Meal meal) {
-        log.info("update {}",meal);
-        service.update(meal, userId);
+        log.info("update {}", meal);
+        service.update(meal, SecurityUtil.authUserId());
     }
 
 }
