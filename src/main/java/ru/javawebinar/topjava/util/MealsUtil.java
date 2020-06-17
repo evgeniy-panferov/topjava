@@ -31,6 +31,18 @@ public class MealsUtil {
         return filterByPredicate(meals, caloriesPerDay, meal -> true);
     }
 
+    public static List<MealTo> getFiltered(Collection<MealTo> meals, int caloriesPerDay, String startDate, String finishDate, String startTime, String finishTime) {
+        LocalDate startDateResult = startDate.equals("") ? LocalDate.MIN : LocalDate.parse(startDate);
+        LocalDate finishDateResult = finishDate.equals("") ? LocalDate.MAX : LocalDate.parse(finishDate);
+        LocalTime startTimeResult = startTime.equals("") ? LocalTime.MIN : LocalTime.parse(startTime);
+        LocalTime finishTimeResult = finishTime.equals("") ? LocalTime.MAX : LocalTime.parse(finishTime);
+        List<MealTo> collect = meals.stream()
+                .filter(meal -> DateTimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalTime(), startTimeResult, finishTimeResult))
+                .filter(meal -> DateTimeUtil.isBetweenHalfOpenDate(meal.getDateTime().toLocalDate(), startDateResult, finishDateResult))
+                .collect(Collectors.toList());
+        return collect;
+    }
+
     public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
         return filterByPredicate(meals, caloriesPerDay, meal -> DateTimeUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime));
     }
@@ -41,6 +53,7 @@ public class MealsUtil {
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
 //                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
+
 
         return meals.stream()
                 .filter(filter)

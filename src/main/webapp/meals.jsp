@@ -49,6 +49,20 @@
             </tr>
         </c:forEach>
     </table>
+    <br>
+    <form method="get" action="meals">
+        <input type="hidden" name="action" value="filter">
+        Фильтр по дате
+        <label for="startDate"></label><input type="date" id="startDate" name="startDate">
+        <label for="finishDate"></label><input type="date" id="finishDate" name="finishDate">
+        <button type="submit">Отправить</button>
+        <br><br>
+        Фильтр по времени
+        <label for="startTime"></label><input type="time" id="startTime" name="startTime">
+        <label for="finishTime"></label><input type="time" id="finishTime" name="finishTime">
+        <button type="submit">Отправить</button>
+    </form>
+
 </section>
 </body>
 </html>
