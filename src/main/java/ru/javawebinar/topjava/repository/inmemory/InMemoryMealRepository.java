@@ -24,10 +24,17 @@ public class InMemoryMealRepository implements MealRepository {
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),1);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),1);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),1);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 10, 0), "Завтрак111", 500),1);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 12, 0), "Обед111", 1000),1);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 18, 0), "Ужин111", 500),1);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100),2);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),2);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),2);
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410),2);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 0, 0), "Еда на граничное значение1111", 100),2);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 10, 0), "Завтрак1111", 1000),2);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 13, 0), "Обед1111", 500),2);
+        save(new Meal(LocalDateTime.of(2020, Month.JUNE, 17, 20, 0), "Ужин1111", 410),2);
     }
 
     @Override

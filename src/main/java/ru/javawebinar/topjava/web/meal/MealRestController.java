@@ -46,6 +46,12 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(SecurityUtil.authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
+    public List<MealTo> getAllFilter(String startDate, String finishDate, String startTime, String finishTime) {
+        log.info("getAll");
+        return MealsUtil.getFiltered(getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY,startDate,finishDate,
+                startTime, finishTime);
+    }
+
     public void update(Meal meal) {
         log.info("update {}", meal);
         service.update(meal, SecurityUtil.authUserId());
