@@ -37,16 +37,12 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(req.getParameter("id"));
-
-        profileRestController.create(new User(null, "vasya", "123@123", "1234", Role.USER));
-        profileRestController.create(new User(null, "petya", "123@123", "1234", Role.USER));
         SecurityUtil.setAuthUserId(userId);
         resp.sendRedirect("meals");
     }
 
     @Override
     public void destroy() {
-        super.destroy();
         appCtx.close();
     }
 }

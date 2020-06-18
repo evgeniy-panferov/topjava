@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -74,7 +76,12 @@ public class MealServlet extends HttpServlet {
                 String finishDate = request.getParameter("finishDate");
                 String startTime = request.getParameter("startTime");
                 String finishTime = request.getParameter("finishTime");
-                request.setAttribute("meals", mealRestController.getAllFilter(startDate,finishDate,startTime,finishTime));
+                LocalDate startDateResult = request.getParameter("startDate").equals("") ? LocalDate.MIN : LocalDate.parse(startDate);
+                LocalDate finishDateResult = request.getParameter("finishDate").equals("") ? LocalDate.MAX : LocalDate.parse(finishDate);
+                LocalTime startTimeResult = request.getParameter("startTime").equals("") ? LocalTime.MIN : LocalTime.parse(startTime);
+                LocalTime finishTimeResult = request.getParameter("finishTime").equals("") ? LocalTime.MAX : LocalTime.parse(finishTime);
+                request.setAttribute("meals", mealRestController.getAllFilter(startDateResult, finishDateResult, startTimeResult,
+                        finishTimeResult));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":
@@ -93,7 +100,6 @@ public class MealServlet extends HttpServlet {
 
     @Override
     public void destroy() {
-        super.destroy();
         appCtx.close();
     }
 }

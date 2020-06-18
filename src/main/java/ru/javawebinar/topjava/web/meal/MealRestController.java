@@ -9,6 +9,8 @@ import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -27,6 +29,9 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
+        if (!meal.isNew()) {
+            throw new IllegalArgumentException(meal + " must be new (id=null)");
+        }
         return service.create(meal, SecurityUtil.authUserId());
     }
 
@@ -46,10 +51,10 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(SecurityUtil.authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    public List<MealTo> getAllFilter(String startDate, String finishDate, String startTime, String finishTime) {
-        log.info("getAll");
-        return MealsUtil.getFiltered(getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY,startDate,finishDate,
-                startTime, finishTime);
+    public List<MealTo> getAllFilter(LocalDate startDate, LocalDate finishDate, LocalTime startTime, LocalTime finishTime) {
+        log.info("getAllFilter");
+        return MealsUtil.getFiltered(MealsUtil.getTos(service.getAll(SecurityUtil.authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY),
+                startDate, finishDate, startTime, finishTime);
     }
 
     public void update(Meal meal) {

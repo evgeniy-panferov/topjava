@@ -45,7 +45,6 @@ public class InMemoryMealRepository implements MealRepository {
             meal.setId(counter.incrementAndGet());
             meal.setUserId(userId);
             temp.put(meal.getId(), meal);
-            repository.put(userId, temp);
             return meal;
         }
         // handle case: update, but not present in storage
@@ -54,13 +53,19 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        return repository.get(userId).remove(id) != null;
+        return repository.get(userId) != null && repository.get(userId).remove(id) != null;
 
     }
 
     @Override
     public Meal get(int id, int userId) {
-        return repository.get(userId).get(id);
+        Meal meal;
+        if(repository.get(userId)==null){
+            meal = null;
+            return meal;
+        }
+        meal = repository.get(userId).get(id);
+        return meal;
     }
 
     @Override
