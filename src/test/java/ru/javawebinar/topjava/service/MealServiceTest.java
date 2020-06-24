@@ -101,13 +101,13 @@ public class MealServiceTest {
     }
 
     @Test
-    public void update() throws Exception {
+    public void updateAlien() throws Exception {
         Meal updated = getUpdated();
         assertThrows(NotFoundException.class, () -> service.update(updated, ADMIN_ID));
     }
 
     @Test
-    public void updateAlien() throws Exception {
+    public void update() throws Exception {
         Meal updated = getUpdated();
         service.update(updated, USER_ID);
         assertMatch(service.get(MEALUSER1.getId(), USER_ID), updated);

@@ -8,14 +8,14 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
     public static final int NOT_FOUND = 10;
-    public static final int MEAL_IDUSER1 = 100002;
-    public static final int MEAL_IDUSER2 = 100003;
-    public static final int MEAL_IDADMIN1 = 100004;
-    public static final int MEAL_IDADMIN2 = 100005;
+    public static final int MEAL_IDUSER1 = START_SEQ+2;
+    public static final int MEAL_IDUSER2 = START_SEQ+3;
+    public static final int MEAL_IDADMIN1 = START_SEQ+4;
+    public static final int MEAL_IDADMIN2 = START_SEQ+5;
     public static final int USER_ID = SecurityUtil.authUserId();
     public static final int ADMIN_ID = SecurityUtil.authUserId()+1;
 
@@ -38,7 +38,7 @@ public class MealTestData {
     }
 
     public static void assertMatch(Meal actual, Meal expected) {
-        assertThat(actual).isEqualTo(expected);
+        actual.equals(expected);
     }
 
 
@@ -48,6 +48,6 @@ public class MealTestData {
     }
 
     public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
-        assertThat(actual).isEqualTo(expected);
+        actual.equals(expected);
     }
 }
