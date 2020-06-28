@@ -4,13 +4,18 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NamedQueries({
         @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=?1 AND m.user.id=?2"),
-        @NamedQuery(name = Meal.GET, query = "SELECT m FROM Meal m WHERE m.id=?1 AND m.user.id=?2")
+        @NamedQuery(name = Meal.GET, query = "SELECT m FROM Meal m WHERE m.id=?1 AND m.user.id=?2"),
+        @NamedQuery(name = Meal.GET_ALL ,query = "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
+        @NamedQuery(name = Meal.GET_BETWEEN ,query = "SELECT m FROM Meal m WHERE m.dateTime >=:startDateTime " +
+                "and m.dateTime<:endDateTime and m.user.id=:userId ORDER BY m.dateTime DESC ")
 })
 
 @Entity
@@ -19,12 +24,16 @@ public class Meal extends AbstractBaseEntity {
 
     public static final String DELETE = "Meal.delete";
     public static final String GET = "Meal.get";
+    public static final String GET_ALL = "Meal.getAll";
+    public static final String GET_BETWEEN = "Meal.getBetweenHalfOpen";
 
-    @Column(name = "date_time", nullable = false, unique = true)
+    @Column(name = "date_time", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
     @NotBlank
+    @Size(min = 2,max = 120)
     private String description;
 
     @Column(name = "calories", nullable = false)
@@ -88,7 +97,6 @@ public class Meal extends AbstractBaseEntity {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     @Override
     public String toString() {
