@@ -48,7 +48,7 @@ public abstract class BaseServiceTest {
                 "\n---------------------------------" +
                 results +
                 "\n---------------------------------");
-    results.setLength(0);
+        results.setLength(0);
     }
 
 }
