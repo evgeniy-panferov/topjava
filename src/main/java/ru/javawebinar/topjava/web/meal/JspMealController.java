@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import java.util.Objects;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
@@ -25,36 +24,35 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
 @RequestMapping("/meals")
-public class JspMealController extends AbstractRestController {
-
-    @Qualifier("abstractRestController")
-    @Autowired
-    private AbstractRestController abstractRestController;
+public class JspMealController extends AbstractMealController {
 
     public JspMealController(MealService service) {
         super(service);
     }
 
     @GetMapping
-    public String getMeals(Model model) {
-        model.addAttribute("meals", abstractRestController.getAll());
+    public String get(Model model) {
+        model.addAttribute("meals", getAll());
         return "meals";
     }
 
-    @GetMapping(params = {"delete", "id"})
-    public ModelAndView delete(@RequestParam(value = "id") String paramId) {
+    @GetMapping("/delete")
+    public ModelAndView delete(@RequestParam String paramId) {
         int id = getId(paramId);
-        abstractRestController.delete(id);
-        return new ModelAndView("redirect:/meals");
+        delete(id);
+        return new ModelAndView("redirect:meals");
     }
 
-    @GetMapping(params = "action")
-    public String createOrUpdate(@RequestParam(value = "action") String action,
-                                 HttpServletRequest request, Model model) {
-        String id = request.getParameter("id");
-        final Meal meal = "create".equals(action) ?
-                new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                abstractRestController.get(getId(id));
+    @GetMapping("/create")
+    public String create(Model model) {
+        final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
+        model.addAttribute("meal", meal);
+        return "mealForm";
+    }
+
+    @GetMapping("/update")
+    public String update(@RequestParam String id, Model model) {
+        final Meal meal = get(getId(id));
         model.addAttribute("meal", meal);
         return "mealForm";
     }
@@ -67,20 +65,20 @@ public class JspMealController extends AbstractRestController {
                 Integer.parseInt(request.getParameter("calories")));
         String id = request.getParameter("id");
         if (StringUtils.isEmpty(id)) {
-            abstractRestController.create(meal);
+            create(meal);
         } else {
-            abstractRestController.update(meal, getId(id));
+            update(meal, getId(id));
         }
-        return new ModelAndView("redirect:/meals");
+        return new ModelAndView("redirect:meals");
     }
 
-    @GetMapping(params = "filter")
-    public String filter(HttpServletRequest request) {
-        LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
-        LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
-        LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
-        LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-        request.setAttribute("meals", abstractRestController.getBetween(startDate, startTime, endDate, endTime));
+    @GetMapping("/filter")
+    public String filter(@RequestParam Map<String, String> allParams, Model model) {
+        LocalDate startDate = parseLocalDate(allParams.get("startDate"));
+        LocalDate endDate = parseLocalDate(allParams.get("endDate"));
+        LocalTime startTime = parseLocalTime(allParams.get("startTime"));
+        LocalTime endTime = parseLocalTime(allParams.get("endTime"));
+        model.addAttribute("meals", getBetween(startDate, startTime, endDate, endTime));
         return "meals";
     }
 

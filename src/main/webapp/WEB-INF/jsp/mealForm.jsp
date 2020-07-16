@@ -7,24 +7,23 @@
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <h3><a href="${pageContext.request.contextPath}"><spring:message code="app.home"/></a></h3>
     <hr>
-   <spring:message code="app.createMeal" var="createMeal"/>
-    <spring:message code="app.updateMeal" var="updateMeal"/>
+   <spring:message code="meal.createMeal" var="createMeal"/>
+    <spring:message code="meal.updateMeal" var="updateMeal"/>
     <h2>${param.action == 'create' ? createMeal : updateMeal}</h2>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
-    <form method="post" action="meals">
+    <form method="post" action="${pageContext.request.contextPath}/meals">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
-            <dt><spring:message code="app.dateTime"/></dt>
+            <dt><spring:message code="meal.dateTime"/></dt>
             <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime" required></dd>
         </dl>
         <dl>
-            <dt><spring:message code="app.description"/> </dt>
+            <dt><spring:message code="meal.description"/> </dt>
             <dd><input type="text" value="${meal.description}" size=40 name="description" required></dd>
         </dl>
         <dl>
-            <dt><spring:message code="app.calories"/> </dt>
+            <dt><spring:message code="meal.calories"/> </dt>
             <dd><input type="number" value="${meal.calories}" name="calories" required></dd>
         </dl>
         <button type="submit"><spring:message code="button.save"/></button>
