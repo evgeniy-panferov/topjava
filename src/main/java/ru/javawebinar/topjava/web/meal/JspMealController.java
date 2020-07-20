@@ -31,16 +31,16 @@ public class JspMealController extends AbstractMealController {
     }
 
     @GetMapping
-    public String get(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("meals", getAll());
         return "meals";
     }
 
     @GetMapping("/delete")
-    public ModelAndView delete(@RequestParam String paramId) {
-        int id = getId(paramId);
-        delete(id);
-        return new ModelAndView("redirect:meals");
+    public ModelAndView delete(@RequestParam String id) {
+        int paramId = getId(id);
+        delete(paramId);
+        return new ModelAndView("redirect:/meals");
     }
 
     @GetMapping("/create")
@@ -58,7 +58,7 @@ public class JspMealController extends AbstractMealController {
     }
 
     @PostMapping
-    protected ModelAndView doPost(HttpServletRequest request) {
+    public ModelAndView doPost(HttpServletRequest request) {
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
@@ -73,13 +73,13 @@ public class JspMealController extends AbstractMealController {
     }
 
     @GetMapping("/filter")
-    public String filter(@RequestParam Map<String, String> allParams, Model model) {
+    public ModelAndView filter(@RequestParam Map<String, String> allParams, Model model) {
         LocalDate startDate = parseLocalDate(allParams.get("startDate"));
         LocalDate endDate = parseLocalDate(allParams.get("endDate"));
         LocalTime startTime = parseLocalTime(allParams.get("startTime"));
         LocalTime endTime = parseLocalTime(allParams.get("endTime"));
         model.addAttribute("meals", getBetween(startDate, startTime, endDate, endTime));
-        return "meals";
+        return new ModelAndView("meals");
     }
 
     private int getId(String id) {

@@ -53,8 +53,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals/update?id=${meal.id}"><spring:message code="button.update"/></a></td>
-                <td><a href="meals/delete?paramId=${meal.id}"><spring:message code="button.delete"/></a></td>
+                <td><a href="${pageContext.request.contextPath}/meals/update?id=${meal.id}"><spring:message code="button.update"/></a></td>
+                <td><a href="${pageContext.request.contextPath}/meals/delete?id=${meal.id}"><spring:message code="button.delete"/></a></td>
             </tr>
         </c:forEach>
     </table>

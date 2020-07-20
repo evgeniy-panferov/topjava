@@ -8,9 +8,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <hr>
-   <spring:message code="meal.createMeal" var="createMeal"/>
-    <spring:message code="meal.updateMeal" var="updateMeal"/>
-    <h2>${param.action == 'create' ? createMeal : updateMeal}</h2>
+    <h2><spring:message code="${'create' ? 'meal.createMeal' : 'meal.updateMeal'}"/></h2>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <form method="post" action="${pageContext.request.contextPath}/meals">
         <input type="hidden" name="id" value="${meal.id}">
