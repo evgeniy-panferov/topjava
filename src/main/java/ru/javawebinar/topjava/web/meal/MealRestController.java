@@ -37,8 +37,8 @@ public class MealRestController extends AbstractMealController {
         super.delete(id);
     }
 
-    @GetMapping("/{start}/{finish}")
-    public List<MealTo> getBetween(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finish) {
+    @GetMapping(value = "/filter")
+    public List<MealTo> getBetween(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finish) {
         LocalDate startDate = start.toLocalDate();
         LocalTime startTime = start.toLocalTime();
         LocalDate endDate = finish.toLocalDate();
@@ -52,7 +52,7 @@ public class MealRestController extends AbstractMealController {
         super.update(meal, id);
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal) {
         Meal created = super.create(meal);
         URI uriOfNewResource = ServletUriComponentsBuilder

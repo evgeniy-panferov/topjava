@@ -1,20 +1,23 @@
 package ru.javawebinar.topjava.to;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class MealTo {
-    private final Integer id;
 
-    private final LocalDateTime dateTime;
+    private Integer id;
 
-    private final String description;
+    private LocalDateTime dateTime;
 
-    private final int calories;
+    private String description;
 
-    @JsonIgnore
-    private final boolean excess;
+    private int calories;
+
+    private boolean excess;
+
+    public MealTo() {
+        super();
+    }
 
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
         this.id = id;
@@ -44,6 +47,7 @@ public class MealTo {
         return excess;
     }
 
+
     @Override
     public String toString() {
         return "MealTo{" +
@@ -53,5 +57,22 @@ public class MealTo {
                 ", calories=" + calories +
                 ", excess=" + excess +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MealTo mealTo = (MealTo) o;
+        return calories == mealTo.calories &&
+                excess == mealTo.excess &&
+                Objects.equals(id, mealTo.id) &&
+                Objects.equals(dateTime, mealTo.dateTime) &&
+                Objects.equals(description, mealTo.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dateTime, description, calories, excess);
     }
 }
