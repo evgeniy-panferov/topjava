@@ -3,11 +3,6 @@ var context, form;
 function makeEditable(ctx) {
     context = ctx;
     form = $('#detailsForm');
-    $(".delete").click(function () {
-        if (confirm('Are you sure?')) {
-            deleteRow($(this).attr("id"));
-        }
-    });
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
@@ -23,13 +18,15 @@ function add() {
 }
 
 function deleteRow(id) {
-    $.ajax({
-        url: context.ajaxUrl + id,
-        type: "DELETE"
-    }).done(function () {
-        updateTable();
-        successNoty("Deleted");
-    });
+    if (confirm('Are you sure?')) {
+        $.ajax({
+            url: context.ajaxUrl + id,
+            type: "DELETE"
+        }).done(function () {
+            updateTable();
+            successNoty("Deleted");
+        });
+    }
 }
 
 function updateTable() {
