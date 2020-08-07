@@ -22,27 +22,25 @@ $(function () {
                         "defaultContent": "Delete",
                         "orderable": false
                     }
-                ]
+                ],
+                "order": [
+                    [
+                        0,
+                        "desc"
+                    ]]
             })
         }
     );
 });
 
-
 function filter() {
-    var form = $('#filterForm');
-    $.get("user/meals/filter", form.serialize());
+    $.get(context.ajaxUrl +"filter", $('#filterForm').serialize(), function (data) {
+        context.datatableApi.clear().rows.add(data).draw();
+    });
 }
 
 
 function clearFilter() {
-    $.ajax({
-        url: "user/meals/filter",
-        date: {
-            startDate: $('#startDate').val(0),
-            endDate: $('#endDate').val(0),
-            startTime: $('#startTime').val(0),
-            endTime: $('#endTime').val(0)
-        }
-    });
+    $('#filterForm')[0].reset();
+    $.get(context.ajaxUrl +"filter", updateTable())
 }

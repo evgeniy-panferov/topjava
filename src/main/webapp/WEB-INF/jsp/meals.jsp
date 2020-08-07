@@ -12,7 +12,7 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h3 class="text-center"><spring:message code="meal.title"/></h3>
-        <form method="get" id="filterForm" action="meals/filter">
+        <form id="filterForm">
             <div class="card border-dark">
                 <div class="card-body pb-0">
                     <div class="row">
@@ -42,16 +42,16 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <button class="btn btn-danger" onclick="clearFilter()">
+                    <div class="btn btn-danger" onclick="clearFilter()">
                         <span class="fa fa-plus">
                          <spring:message code="common.cancel"/>
                         </span>
-                    </button>
-                    <button class="btn btn-primary" onclick="filter()">
+                    </div>
+                    <div class="btn btn-primary" onclick="filter()">
                             <span class="fa fa-filter">
                         <spring:message code="meal.filter"/>
                             </span>
-                    </button>
+                    </div>
                 </div>
             </div>
         </form>

@@ -42,17 +42,12 @@ public class MealUIController extends AbstractMealController {
     @Override
     @GetMapping(value = "/filter")
     public List<MealTo> getBetween(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalTime startTime,
+            @RequestParam LocalDate endDate,
+            @RequestParam LocalTime endTime) {
+        return super.getBetween(startDate, startTime, endDate, endTime);
 
-        LocalDate startDateNotNull = startDate == null ? LocalDate.MIN : startDate;
-        LocalDate endDateNotNull = endDate == null ? LocalDate.MAX : endDate;
-        LocalTime startTimeNotNull = startTime == null ? LocalTime.MIN : startTime;
-        LocalTime endTimeNotNull = endTime == null ? LocalTime.MAX : endTime;
-
-        return super.getBetween(startDateNotNull, startTimeNotNull, endDateNotNull, endTimeNotNull);
     }
 
 }
