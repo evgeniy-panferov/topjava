@@ -30,8 +30,10 @@ class RootControllerTest extends AbstractControllerTest {
 
     @Test
     void getMeals() throws Exception {
-        perform(get("/meals"))
+        perform(get("/meals").with(userAuth(ADMIN)))
                 .andDo(print())
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().isOk())
+                .andExpect(view().name("meals"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"));
     }
 }

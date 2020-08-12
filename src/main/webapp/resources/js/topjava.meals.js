@@ -3,7 +3,7 @@ var mealAjaxUrl = "profile/meals/";
 function updateFilteredTable() {
     $.ajax({
         type: "GET",
-        url: "profile/meals/filter",
+        url: mealAjaxUrl + "filter",
         data: $("#filter").serialize()
     }).done(updateTableByData);
 }
@@ -27,7 +27,17 @@ $(function () {
                 {
                     "data": "dateTime",
                     "render": function (date, type, row) {
-                        return date.replace("T", " ");
+                        const d = new Date(date)
+                        const dateTimeFormat = new Intl.DateTimeFormat('en', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })
+
+                        const [{value: year}, , {value: month}, , {value: day}, , {value: hour}, , {value: minute}] = dateTimeFormat.formatToParts(d)
+                        return `${year}-${month}-${day} ${hour}:${minute}`
                     }
                 },
                 {
@@ -56,11 +66,7 @@ $(function () {
                 ]
             ],
             "createdRow": function (row, data, dataIndex) {
-                if (data['excess']) {
-                    $(row).addClass('tr').attr("data-mealExcess", true)
-                }else {
-                    $(row).addClass('tr').attr("data-mealExcess", false)
-                }
+                $(row).addClass('tr').attr("data-mealExcess", data['excess'])
             }
         }),
         updateTable: function () {
