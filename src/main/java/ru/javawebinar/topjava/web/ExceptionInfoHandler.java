@@ -7,6 +7,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,7 @@ import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import static ru.javawebinar.topjava.util.exception.ErrorType.*;
 
@@ -44,9 +48,10 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
-    @ExceptionHandler(FieldErrorException.class)
-    public ErrorInfo fieldError(HttpServletRequest req, Exception e) {
-        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
+    @ExceptionHandler(BindException.class)
+    public ErrorInfo bindingError(HttpServletRequest req, BindException e) {
+        String errorMessage = ValidationUtil.getErrorMessage(e.getBindingResult());
+        return new ErrorInfo(req.getRequestURL(),VALIDATION_ERROR, errorMessage);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
