@@ -1,0 +1,19 @@
+PUT http://localhost:8080/topjava/rest/profile/meals/100009
+Authorization: Basic admin@gmail.com admin
+Content-Type: application/json
+{
+"id": "100009"
+"dateTime": "2020-08-18 20:00"
+"description": "Админ"
+"calories": "150"
+}
+
+###
+
+GET http://localhost:8080/topjava/rest/profile/meals/100009
+Content-Type: application/json
+Authorization: Basic admin@gmail.com admin
+###
+
+DELETE http://localhost:8080/topjava/rest/profile/meals/100011
+Authorization: Basic admin@gmail.com admin
